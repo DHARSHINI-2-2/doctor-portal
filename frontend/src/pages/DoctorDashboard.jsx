@@ -45,9 +45,11 @@ function DoctorDashboard() {
             {/* Only show action buttons if the appointment is active */}
             {isActive && (
                 <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
-                    <button style={{ padding: '8px 15px', backgroundColor: '#17a2b8', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                        Join Chat
-                    </button>
+                    <Link to={`/chat/${apt._id}`}>
+                        <button style={{ padding: '8px 15px', backgroundColor: '#17a2b8', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                            Join Chat
+                        </button>
+                    </Link>
                     <Link to={`/prescribe/${apt._id}/${apt.patientId._id}`}>
                         <button style={{ padding: '8px 15px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
                             Write Prescription

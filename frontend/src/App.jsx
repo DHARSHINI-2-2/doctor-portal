@@ -10,6 +10,7 @@ import DoctorDashboard from './pages/DoctorDashboard';
 import MedicalHistory from './pages/MedicalHistory';
 import WritePrescription from './pages/WritePrescription';
 import Prescriptions from './pages/Prescriptions';
+import ConsultationRoom from './pages/ConsultationRoom';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/prescribe/:appointmentId/:patientId" element={<WritePrescription />} />
             <Route path="/prescriptions" element={<Prescriptions />} />
             <Route path="/history" element={<MedicalHistory />} />
+            <Route path="/chat/:appointmentId" element={<ConsultationRoom />} />
         </Route>
       </Routes>
     </div>

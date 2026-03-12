@@ -43,9 +43,11 @@ function MedicalHistory() {
             
             <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
                 {isUpcoming ? (
-                    <button style={{ padding: '8px 15px', backgroundColor: '#17a2b8', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                        Join Chat
-                    </button>
+                    <Link to={`/chat/${apt._id}`}>
+                        <button style={{ padding: '8px 15px', backgroundColor: '#17a2b8', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                            Join Chat
+                        </button>
+                    </Link>
                 ) : (
                     apt.status === 'completed' && (
                         <Link to="/prescriptions">
