@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
 // Connect to the backend server
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://doctor-portal-backend-r1g8.onrender.com");
 
 function ChatBox({ appointmentId, username }) {
     const [currentMessage, setCurrentMessage] = useState('');
