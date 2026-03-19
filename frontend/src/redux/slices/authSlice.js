@@ -1,22 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
 
-// Get user from localStorage if they previously logged in
-const user = JSON.parse(localStorage.getItem('user'));
+// CHANGED: Get user from sessionStorage instead of localStorage
+const user = JSON.parse(sessionStorage.getItem('user'));
 
-// Async Thunk for Login
 export const loginUser = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
     try {
         const response = await api.post('/auth/login', userData);
         if (response.data) {
-            // Combine the nested user info and the token into one flat object
             const loggedInUser = {
                 ...response.data.user,
                 token: response.data.token
             };
             
-            // Save the flattened object to local storage
-            localStorage.setItem('user', JSON.stringify(loggedInUser));
+            // CHANGED: Save to sessionStorage
+            sessionStorage.setItem('user', JSON.stringify(loggedInUser));
             
             return loggedInUser; 
         }
@@ -25,13 +23,12 @@ export const loginUser = createAsyncThunk('auth/login', async (userData, thunkAP
     }
 });
 
-// Async Thunk for Register
 export const registerUser = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
     try {
         const response = await api.post('/auth/register', userData);
         return response.data;
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data.message || error.message);
+        return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
     }
 });
 
@@ -46,7 +43,8 @@ const authSlice = createSlice({
     },
     reducers: {
         logout: (state) => {
-            localStorage.removeItem('user');
+            // CHANGED: Remove from sessionStorage
+            sessionStorage.removeItem('user');
             state.user = null;
             state.isError = false;
             state.isSuccess = false;
@@ -62,7 +60,6 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // Login Cases
             .addCase(loginUser.pending, (state) => { state.isLoading = true; })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
@@ -75,7 +72,6 @@ const authSlice = createSlice({
                 state.message = action.payload;
                 state.user = null;
             })
-            // Register Cases
             .addCase(registerUser.pending, (state) => { state.isLoading = true; })
             .addCase(registerUser.fulfilled, (state) => {
                 state.isLoading = false;
