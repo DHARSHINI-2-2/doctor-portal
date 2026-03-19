@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app);
 // Configure Socket.io with CORS
 const io = new Server(server, {
-    cors: { origin: "http://localhost:5173", methods: ["GET", "POST"] }
+    cors: { origin: "*", methods: ["GET", "POST"] }
 });
 
 // Real-Time Chat Logic
@@ -40,7 +40,12 @@ io.on('connection', (socket) => {
 
 // Middleware to parse JSON
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+));
 
 // Mount Routes
 app.use('/api/auth', require('./routes/authRoutes'));
